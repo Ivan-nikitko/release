@@ -16,6 +16,7 @@ import io.bootique.tools.release.model.maven.persistent.Project;
 import io.bootique.tools.release.model.persistent.Repository;
 import io.bootique.tools.release.service.git.GitService;
 import io.bootique.tools.release.service.maven.MavenService;
+import io.bootique.tools.release.service.maven.NewMavenService;
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.configuration.server.ServerRuntime;
 import org.apache.cayenne.query.ObjectSelect;
@@ -30,7 +31,7 @@ public class MavenProjectsImport extends BaseJob {
     Provider<ServerRuntime> cayenneRuntimeProvider;
 
     @Inject
-    MavenService mavenService;
+    NewMavenService mavenService;
 
     @Inject
     GitService gitService;
@@ -74,15 +75,20 @@ public class MavenProjectsImport extends BaseJob {
                 continue;
             }
 
-            Project project = ObjectSelect.query(Project.class).where(Project.REPOSITORY.eq(repo)).selectFirst(context);
-            if(project == null) {
-                // TODO: this job should also be used to update projects in case their modules are changed
-                project = mavenService.createProject(repo);
-                project.setDisable(true);
-                createdProjects.add(project);
-            }
+          //  Project project = ObjectSelect.query(Project.class).where(Project.REPOSITORY.eq(repo)).selectFirst(context);
+            Project orUpdateProject = mavenService.createOrUpdateProject( repo);
+            createdProjects.add(orUpdateProject);
+//            if(project == null) {
+//                // TODO: this job should also be used to update projects in case their modules are changed
+//                project = mavenService.createProject(repo);
+//                project.setDisable(true);
+//                createdProjects.add(project);
+//            }else {
+//                mavenService.updateProject(project, repo);
+//            }
 
-            project.setBranchName(gitService.getCurrentBranchName(repo));
+           // project.setBranchName(gitService.getCurrentBranchName(repo));
+
         }
         return createdProjects;
     }

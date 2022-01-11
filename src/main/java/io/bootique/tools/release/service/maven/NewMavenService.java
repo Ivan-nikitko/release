@@ -1,12 +1,12 @@
 package io.bootique.tools.release.service.maven;
 
-import io.bootique.tools.release.model.persistent.Repository;
 import io.bootique.tools.release.model.maven.persistent.Project;
+import io.bootique.tools.release.model.persistent.Repository;
 import io.bootique.tools.release.service.preferences.Preference;
 
 import java.util.List;
 
-public interface MavenService {
+public interface NewMavenService {
 
     Preference<String> ORGANIZATION_GROUP_ID = Preference.of("mvn.group.id", String.class);
 
@@ -17,6 +17,8 @@ public interface MavenService {
     Project createProject(Repository repository);
 
     Project updateProject(Project project, Repository repository);
+
+    Project createOrUpdateProject(Repository repository);
 
     List<Project> sortProjects(List<Project> projects);
 }

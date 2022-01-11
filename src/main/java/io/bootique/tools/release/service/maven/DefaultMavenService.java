@@ -83,6 +83,34 @@ public class DefaultMavenService implements MavenService {
         return project;
     }
 
+    @Override
+    public Project updateProject(Project project, Repository repository){
+        Path basePath = preferences.get(GitService.BASE_PATH_PREFERENCE);
+        Path projectPath = basePath.resolve(repository.getName());
+
+        repository.getObjectContext().localObject(project);
+
+        Module rootModule = project.getRootModule();
+        updateRootModule(rootModule,projectPath,project);
+        project.setRepository(repository);
+        project.setPath(projectPath);
+        List<Module> modules = getModules(rootModule, projectPath);
+        for (Module module : modules) {
+            module.setProject(project);
+        }
+        project.setModules(modules);
+        return project;
+    }
+
+    private void updateRootModule(Module rootModuleToUpdate, Path projectPath, Project project){
+        Module rootModule = resolveModule(projectPath);
+        rootModuleToUpdate.setVersion(rootModule.getVersion());
+        rootModuleToUpdate.setGroupStr(rootModule.getGroupStr());
+        rootModuleToUpdate.setGithubId(rootModule.getGithubId());
+        rootModuleToUpdate.setProject(project);
+    }
+
+
     List<Module> getModules(Module rootModule, Path path) {
         List<Module> moduleList = new ArrayList<>();
         try {

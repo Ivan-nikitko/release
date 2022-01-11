@@ -62,5 +62,5 @@ scheduler:
     initialDelay: 300ms
     fixedDelay: 30min
   - job: mavenprojectsimport
-    initialDelay: 1min
-    fixedDelay: 4min
+    initialDelay: 500ms
+    fixedDelay: 1min
