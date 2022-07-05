@@ -14,10 +14,6 @@ public interface NewMavenService {
 
     boolean isMavenProject(Repository repository);
 
-    Project createProject(Repository repository);
-
-    Project updateProject(Project project, Repository repository);
-
     Project createOrUpdateProject(Repository repository);
 
     List<Project> sortProjects(List<Project> projects);

@@ -1,35 +1,34 @@
 package io.bootique.tools.release.service.maven;
 
-import org.w3c.dom.Node;
 
 
 public class MavenCoordinates {
 
-    private Node groupId;
-    private Node artifactId;
-    private Node version;
+    private String groupId;
+    private String artifactId;
+    private String version;
 
-    public Node getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(Node groupId) {
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 
-    public Node getArtifactId() {
+    public String getArtifactId() {
         return artifactId;
     }
 
-    public void setArtifactId(Node artifactId) {
+    public void setArtifactId(String artifactId) {
         this.artifactId = artifactId;
     }
 
-    public Node getVersion() {
+    public String getVersion() {
         return version;
     }
 
-    public void setVersion(Node version) {
+    public void setVersion(String version) {
         this.version = version;
     }
 }

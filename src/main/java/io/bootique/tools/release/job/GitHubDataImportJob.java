@@ -51,9 +51,9 @@ public class GitHubDataImportJob extends BaseJob {
     public JobResult run(Map<String, Object> map) {
         ServerRuntime runtime = runtimeProvider.get();
 
-//        ObjectContext context = runtime.newContext();
-//        syncGitHubDataData(context);
-//        context.commitChanges();
+        ObjectContext context = runtime.newContext();
+        syncGitHubDataData(context);
+        context.commitChanges();
 
         return JobResult.success(getMetadata());
     }
