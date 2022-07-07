@@ -39,8 +39,6 @@ import io.bootique.tools.release.service.job.DefaultBatchJobService;
 import io.bootique.tools.release.service.logger.*;
 import io.bootique.tools.release.service.maven.DefaultMavenService;
 import io.bootique.tools.release.service.maven.MavenService;
-import io.bootique.tools.release.service.maven.NewDefaultMavenService;
-import io.bootique.tools.release.service.maven.NewMavenService;
 import io.bootique.tools.release.service.preferences.PreferenceService;
 import io.bootique.tools.release.service.preferences.credential.PreferenceCredentialFactory;
 import io.bootique.tools.release.service.readme.DefaultReleaseNotesService;
@@ -85,7 +83,6 @@ public class Application implements BQModule {
         binder.bind(GitHubRestAPI.class).to(GitHubRestV3API.class).inSingletonScope();
         binder.bind(GitService.class).to(ExternalGitService.class).inSingletonScope();
         binder.bind(MavenService.class).to(DefaultMavenService.class).inSingletonScope();
-        binder.bind(NewMavenService.class).to(NewDefaultMavenService.class).inSingletonScope();
         binder.bind(BatchJobService.class).to(DefaultBatchJobService.class).inSingletonScope();
         binder.bind(LoggerService.class).to(DefaultLoggerService.class).inSingletonScope();
         binder.bind(MvnCentralService.class).to(DefaultMvnCentralService.class).inSingletonScope();

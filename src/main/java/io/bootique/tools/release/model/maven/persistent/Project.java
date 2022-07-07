@@ -45,14 +45,6 @@ public class Project extends _Project implements Comparable<Project> {
         this.pathStr = path.toString();
     }
 
-    public void setRootModule(Module rootModule) {
-        if (rootModule.getObjectContext() != null) {
-            super.setRootModule(rootModule);
-        } else {
-            this.rootModule = rootModule;
-        }
-    }
-
     public void addModule(Module module) {
         module.setProject(this);
         this.addToModules(module);
@@ -63,20 +55,8 @@ public class Project extends _Project implements Comparable<Project> {
         this.modules = new ArrayList<>(modules);
     }
 
-    public void setRepository(Repository repository) {
-        if (repository.getObjectContext() != null) {
-            super.setRepository(repository);
-        } else {
-            this.repository = repository;
-        }
-    }
-
     public void setDependencies(Set<Project> set) {
         set.forEach(super::addToDependencies);
-    }
-
-    public void addDependenciesWithoutContext(List<Project> dependencies) {
-        this.dependencies = dependencies;
     }
 
     @Override

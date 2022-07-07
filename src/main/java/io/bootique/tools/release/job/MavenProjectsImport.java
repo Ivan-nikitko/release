@@ -7,7 +7,7 @@ import io.bootique.tools.release.model.maven.persistent.Module;
 import io.bootique.tools.release.model.maven.persistent.ModuleDependency;
 import io.bootique.tools.release.model.maven.persistent.Project;
 import io.bootique.tools.release.model.persistent.Repository;
-import io.bootique.tools.release.service.maven.NewMavenService;
+import io.bootique.tools.release.service.maven.MavenService;
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.configuration.server.ServerRuntime;
 import org.apache.cayenne.query.ObjectSelect;
@@ -28,7 +28,7 @@ public class MavenProjectsImport extends BaseJob {
     Provider<ServerRuntime> cayenneRuntimeProvider;
 
     @Inject
-    NewMavenService mavenService;
+    MavenService mavenService;
 
 
     public MavenProjectsImport() {
@@ -54,6 +54,9 @@ public class MavenProjectsImport extends BaseJob {
         patchOrphanModules(createdProjects);
         context.commitChanges();
 
+        syncDependencies(createdProjects);
+        context.commitChanges();
+
         // link projects with each other
         linkProjects(createdProjects);
         context.commitChanges();
@@ -61,6 +64,12 @@ public class MavenProjectsImport extends BaseJob {
         LOGGER.info("Job done, created {} projects.", createdProjects.size());
 
         return JobResult.success(getMetadata());
+    }
+
+    private void syncDependencies(List<Project> projects) {
+        for (Project project : projects) {
+            mavenService.syncDependencies(project, projects);
+        }
     }
 
     private List<Project> syncProjects(List<Repository> repositories) {

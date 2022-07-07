@@ -2,8 +2,9 @@ package io.bootique.tools.release.model.maven.persistent;
 
 import io.bootique.tools.release.model.maven.persistent.auto._Module;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Module extends _Module implements Comparable<Module> {
@@ -24,8 +25,8 @@ public class Module extends _Module implements Comparable<Module> {
         this.dependencies = new ArrayList<>();
     }
 
-    public void addDependenciesWithoutContext(List<ModuleDependency> dependencies) {
-        this.dependencies = dependencies;
+    public Path getPath() {
+        return Path.of(getProject().getPath() + File.separator + getGithubId());
     }
 
     @Override

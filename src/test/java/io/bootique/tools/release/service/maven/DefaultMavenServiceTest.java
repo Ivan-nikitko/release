@@ -42,7 +42,7 @@ class DefaultMavenServiceTest {
         service = new DefaultMavenService(mockPreferenceService);
     }
 
-    @Test
+/*    @Test
     @DisplayName("Resolve root module test")
     void resolveRootModule() {
         Module module = service.resolveModule(Paths.get("."));
@@ -51,9 +51,9 @@ class DefaultMavenServiceTest {
         assertEquals("release", module.getGithubId());
         assertEquals("1.0-SNAPSHOT", module.getVersion());
         assertTrue(module.getDependencies().isEmpty());
-    }
+    }*/
 
-    @Test
+/*    @Test
     @DisplayName("Get set of modules test")
     void testSetOfModules(@TempDir Path destPath) throws IOException {
         Path srcPath = Paths.get("src" + File.separator + "test" + File.separator + "resources" + File.separator + "bootique");
@@ -70,9 +70,9 @@ class DefaultMavenServiceTest {
             assertEquals("0.26-SNAPSHOT", module.getVersion());
             assertTrue(names.contains(module.getGithubId()));
         }
-    }
+    }*/
 
-    @Test
+/*    @Test
     @DisplayName("Create project test")
     void createProject(@TempDir Path path) throws IOException {
         mockPreferenceService.set(GitService.BASE_PATH_PREFERENCE, path);
@@ -92,7 +92,7 @@ class DefaultMavenServiceTest {
             assertEquals("0.26-SNAPSHOT", module.getVersion());
             assertTrue(names.contains(module.getGithubId()));
         }
-    }
+    }*/
 
     @Test
     void sortNoDeps() {
