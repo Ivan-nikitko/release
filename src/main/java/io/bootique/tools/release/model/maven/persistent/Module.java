@@ -4,7 +4,6 @@ import io.bootique.tools.release.model.maven.persistent.auto._Module;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Module extends _Module implements Comparable<Module> {
@@ -22,7 +21,6 @@ public class Module extends _Module implements Comparable<Module> {
         this.groupStr = Objects.requireNonNull(groupStr);
         this.githubId = Objects.requireNonNull(githubId);
         this.version = Objects.requireNonNull(version);
-        this.dependencies = new ArrayList<>();
     }
 
     public Path getPath() {

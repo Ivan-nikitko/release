@@ -1,30 +1,19 @@
 package io.bootique.tools.release.service.maven;
 
-import io.bootique.tools.release.model.persistent.Repository;
-import io.bootique.tools.release.model.maven.persistent.ModuleDependency;
-import io.bootique.tools.release.model.maven.persistent.Module;
 import io.bootique.tools.release.model.maven.persistent.Project;
-import io.bootique.tools.release.service.git.GitService;
+import io.bootique.tools.release.model.persistent.Repository;
 import io.bootique.tools.release.service.preferences.MockPreferenceService;
-import io.bootique.tools.release.util.CopyDirVisitor;
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.configuration.server.ServerRuntime;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DefaultMavenServiceTest {
 

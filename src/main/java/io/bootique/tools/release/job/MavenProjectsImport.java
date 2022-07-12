@@ -3,8 +3,6 @@ package io.bootique.tools.release.job;
 import io.bootique.job.BaseJob;
 import io.bootique.job.JobMetadata;
 import io.bootique.job.runnable.JobResult;
-import io.bootique.tools.release.model.maven.persistent.Module;
-import io.bootique.tools.release.model.maven.persistent.ModuleDependency;
 import io.bootique.tools.release.model.maven.persistent.Project;
 import io.bootique.tools.release.model.persistent.Repository;
 import io.bootique.tools.release.service.maven.MavenService;
@@ -57,9 +55,6 @@ public class MavenProjectsImport extends BaseJob {
         syncDependencies(createdProjects);
         context.commitChanges();
 
-        // link projects with each other
-        linkProjects(createdProjects);
-        context.commitChanges();
 
         LOGGER.info("Job done, created {} projects.", createdProjects.size());
 
@@ -84,29 +79,17 @@ public class MavenProjectsImport extends BaseJob {
         return createdProjects;
     }
 
-    private void linkProjects(List<Project> createdProjects) {
-        for(Project createdProject: createdProjects) {
-            for (Module module : createdProject.getModules()) {
-                for (ModuleDependency dependency : module.getDependencies()) {
-                    Project depProject = dependency.getModule().getProject();
-                    if (depProject != null && !createdProject.equals(depProject)) {
-                        createdProject.addToDependencies(depProject);
-                    }
-                }
-            }
-        }
-    }
+
 
     private void patchOrphanModules(List<Project> createdProjects) {
         createdProjects.stream()
                 .flatMap(p -> p.getModules().stream())
-                .flatMap(m -> m.getDependencies().stream())
-                .filter(d -> d.getModule().getProject() == null)
+                .filter(m -> m.getProject() == null)
                 .forEach(orphan -> {
-                    String group = orphan.getModule().getGroupStr();
+                    String group = orphan.getGroupStr();
                     for(Project project : createdProjects) {
                         if(group.equals(project.getRootModule().getGroupStr())) {
-                            orphan.getModule().setProject(project);
+                            orphan.setProject(project);
                             break;
                         }
                     }
